@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 3) do
+ActiveRecord::Schema.define(version: 5) do
 
   create_table "states", force: :cascade do |t|
     t.string "name"
@@ -23,9 +23,31 @@ ActiveRecord::Schema.define(version: 3) do
     t.integer "totalTestResults"
   end
 
+  create_table "usas", force: :cascade do |t|
+    t.string "name"
+    t.integer "positive"
+    t.integer "negative"
+    t.integer "pending"
+    t.integer "hospitalizedCurrently"
+    t.integer "hospitalizedCumulative"
+    t.integer "inIcuCurrently"
+    t.integer "inIcuCumulative"
+    t.integer "onVentilatorCurrently"
+    t.integer "onVentilatorCumulative"
+    t.integer "recovered"
+    t.integer "death"
+    t.integer "hospitalized"
+    t.integer "totalTestResults"
+  end
+
   create_table "user_state_records", force: :cascade do |t|
     t.integer "user_id"
     t.integer "state_id"
+  end
+
+  create_table "user_usa_records", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "usa_id"
   end
 
   create_table "users", force: :cascade do |t|
