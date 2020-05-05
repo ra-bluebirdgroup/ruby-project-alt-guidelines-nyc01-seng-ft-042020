@@ -14,6 +14,13 @@ ActiveRecord::Schema.define(version: 3) do
 
   create_table "states", force: :cascade do |t|
     t.string "name"
+    t.string "dataQualityGrade"
+    t.integer "positive"
+    t.integer "negative"
+    t.integer "recovered"
+    t.datetime "lastUpdateEt"
+    t.integer "death"
+    t.integer "totalTestResults"
   end
 
   create_table "user_state_records", force: :cascade do |t|
