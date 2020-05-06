@@ -33,15 +33,15 @@ handler.option('USA total')  { |selection| selection }
 
  if user
    until exit == true
-  puts "Welcome #{user.name}"
-  puts "You currently have #{user.states.count} states saved"
+  puts "Welcome #{user.name},"
+  puts "You currently have #{user.states.count} states saved."
 
   CLI::UI::StdoutRouter.enable
   CLI::UI::Frame.open('Menu') do
   CLI::UI::Prompt.ask('please select a category to view current data:') do |handler|
  handler.option('My states')  { |selection|
       if user.states.empty?
-        puts "You have not added any states"
+        puts "You have not added any states."
       else
         CLI::UI::Prompt.ask('please select a state:') do |handler|
           user.states.map { |s| handler.option(s.name) { |selection1| display_state_data("#{selection1}")
@@ -75,7 +75,7 @@ handler.option('USA total')  { |selection| selection }
                  end
 
               else
-                CLI::UI::Prompt.ask('Would to start tracking this state?') do |handler|
+                CLI::UI::Prompt.ask('Would you like to start tracking this state?') do |handler|
                     handler.option("Yes") { |selection6| user.states.push(State.find_by(name: selection3)) }
                     handler.option("No") { |selection7| puts "State is not being tracked." }
                   end
@@ -86,23 +86,21 @@ handler.option('USA total')  { |selection| selection }
          }
 
  handler.option('All states') { |selection|
-   CLI::UI::Prompt.ask('please select a state:') do |handler|
-     State.all.each { |s| handler.option(s.name){ |selection|
-          chosen_state = State.find_by(name: "#{selection}")
-          puts "State: #{chosen_state.name}"
-          puts "dataQualityGrade: #{chosen_state.dataQualityGrade}"
-          puts "positive: #{chosen_state.positive}"
-          puts "negative: #{chosen_state.negative}"
-          puts "recovered: #{chosen_state.recovered}"
-          puts "lastUpdateEt: #{chosen_state.lastUpdateEt}"
-          puts "death: #{chosen_state.death}"
-          puts "totalTestResults: #{chosen_state.totalTestResults}"
-       }
-     }
-    end
+        State.all.each do |state|
+          display_state_data(state.name)
+        end
   }
 
  handler.option('USA total')  { |selection| selection }
+
+ handler.option('Settings') { |selection|
+   CLI::UI::Prompt.ask('') do |handler|
+     handler.option('change profile name') { |selection| exit = true }
+     handler.option('delete my account') { |selection| exit = true }
+     handler.option('back ↩') { |selection|  }
+   end
+  }
+
 handler.option('Log out') { |selection| exit = true }
   end
 end
