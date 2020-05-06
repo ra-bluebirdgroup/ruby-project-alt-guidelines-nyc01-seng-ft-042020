@@ -8,3 +8,5 @@ gem "pry"
 gem "require_all"
 gem "rake"
 gem 'rest-client', '~> 2.1'
+gem 'cli-ui'
+gem 'colorize', '~> 0.8.1'
