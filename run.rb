@@ -44,9 +44,24 @@ handler.option('USA total')  { |selection| selection }
         puts "You have not added any states"
       else
         CLI::UI::Prompt.ask('please select a state:') do |handler|
-          user.states.map { |s| handler.option(s.name) { |selection1| display_state_data("#{selection1}")}}
+          user.states.map { |s| handler.option(s.name) { |selection1| display_state_data("#{selection1}")
+          if user.states.map { |s| s.name }.include?(selection1)
+           CLI::UI::Prompt.ask('Would you like to stop tracking this state?') do |handler|
+               handler.option("Yes") { |selection8| user.states.delete(State.find_by(name: selection1)) }
+               handler.option("No") { |selection9| puts "This state is being tracked." }
+             end
+
+          else
+            CLI::UI::Prompt.ask('Would to start tracking this state?') do |handler|
+                handler.option("Yes") { |selection10| user.states.push(State.find_by(name: selection1)) }
+                handler.option("No") { |selection11| puts "State is not being tracked." }
+              end
+           end
+
+          }
+        }
          end
-      end 
+      end
      }
 
  handler.option('By state')  { |selection2|
