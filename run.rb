@@ -91,7 +91,23 @@ handler.option('USA total')  { |selection| selection }
         end
   }
 
- handler.option('USA total')  { |selection| selection }
+ handler.option('USA total')  { |selection|
+   chosen_state = Usa.all.first
+   puts CLI::UI.fmt "Country:".colorize(:blue).on_white + " {{*}} USA"
+   puts "Positive: #{chosen_state.positive}"
+   puts "Negative: #{chosen_state.negative}"
+   puts "Pending: #{chosen_state.pending}"
+   puts "Currently hospitalized: #{chosen_state.hospitalizedCurrently}"
+   puts "Cumulative hospitalized: #{chosen_state.hospitalizedCumulative}"
+   puts "Currently in ICU: #{chosen_state.inIcuCurrently}"
+   puts "Cumulative in ICU: #{chosen_state.inIcuCumulative}"
+   puts "Currently on ventilator: #{chosen_state.onVentilatorCurrently}"
+   puts "Cumulative on ventilator: #{chosen_state.onVentilatorCumulative}"
+   puts "Recovered:" + " #{chosen_state.recovered}".colorize(:green)
+   puts "Death:" + " #{chosen_state.death}".colorize(:red)
+   puts "Hospitalized:" + " #{chosen_state.hospitalized}".colorize(:red)
+   puts "Total test results: #{chosen_state.totalTestResults}"
+  }
 
  handler.option('Settings') { |selection|
    CLI::UI::Prompt.ask('') do |handler|
