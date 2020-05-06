@@ -39,7 +39,15 @@ handler.option('USA total')  { |selection| selection }
   CLI::UI::StdoutRouter.enable
   CLI::UI::Frame.open('Menu') do
   CLI::UI::Prompt.ask('please select a category to view current data:') do |handler|
- handler.option('My states')  { |selection| puts user.states.all }
+ handler.option('My states')  { |selection|
+      if user.states.empty?
+        puts "You have not added any states"
+      else
+        CLI::UI::Prompt.ask('please select a state:') do |handler|
+          user.states.map { |s| handler.option(s.name) { |selection1| display_state_data("#{selection1}")}}
+         end
+      end 
+     }
 
  handler.option('By state')  { |selection2|
        CLI::UI::Prompt.ask('please select a state:') do |handler|
