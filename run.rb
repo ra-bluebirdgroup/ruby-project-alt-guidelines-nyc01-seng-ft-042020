@@ -151,9 +151,7 @@ end
           user.destroy
           puts "Your account has been deleted"
           run_app
-
        }
-
      handler.option('back ↩') { |selection|  }
    end
   }
@@ -161,9 +159,8 @@ end
 handler.option('Log out') { |selection| exit = true }
 
   end
- end
 end
-
+end
   else
        puts "User name not found, please sign up."
        run_app
