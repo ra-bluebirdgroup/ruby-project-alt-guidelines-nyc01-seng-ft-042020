@@ -70,8 +70,9 @@ handler.option('back ↩')  { |selection| run_app }
  end
 end
 
+#sign in
  def sign_in
-  exit = nil
+  exit = false
   puts "Please enter your user name to sign in:"
   user_name = gets.strip
   user = User.find_by(name: user_name)
@@ -134,41 +135,47 @@ end
   }
 
  handler.option('USA total')  { |selection|
-
- view_usa_total
+      view_usa_total
   }
 
  handler.option('Settings') { |selection|
    CLI::UI::Prompt.ask('') do |handler|
+
      handler.option('change profile name') { |selection|
       puts "Please enter a new profile name:"
       input = gets.strip
+      if User.all.map { |u| u.name}.include?(input)
+        puts "This username is taken, Please choose a different user name."
+      else
       user.update(name: input)
       puts "You name has been changed to #{input}"
+     end
       }
+
      handler.option('delete my account') { |selection|
-          exit = true
           user.destroy
           puts "Your account has been deleted"
-          run_app
+          exit = true
        }
      handler.option('back ↩') { |selection|  }
+
    end
   }
 
 handler.option('Log out') { |selection| exit = true }
 
   end
+ end
 end
-end
+
   else
        puts "User name not found, please sign up."
-       run_app
+
   end
 
  end
 
-
+#sign up method
  def sign_up
    puts "Please enter your new user name:"
    user_name = gets.strip
@@ -179,7 +186,7 @@ end
    puts "You have created a user #{user_name}."
    sign_in
    end
-   sign_up
+   run_app
  end
 
 #begin
@@ -206,9 +213,8 @@ sign_up
 }
 #exit
 handler.option('exit')   { |selection|
-  puts "Goodbye!".colorize(:blue)
+  puts "Goodbye!".colorize(:yellow)
+
 }
  end
 end
-
-run_app
